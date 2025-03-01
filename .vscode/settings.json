@@ -11,7 +11,11 @@
         ".python-version": true,
         ".venv": true,
         ".vscode": true,
-        ".gitignore": true
+        ".gitignore": true,
+        "src/__pycache__": true,
+        "README.md": true,
+        "src/pages/__pycache__": true,
+        "src/utils/__pycache__": true
     },
     "hide-files.files": [
         "uv.lock",
@@ -19,6 +23,10 @@
         ".python-version",
         ".venv",
         ".vscode",
-        ".gitignore"
+        ".gitignore",
+        "src/__pycache__",
+        "README.md",
+        "src/pages/__pycache__",
+        "src/utils/__pycache__"
     ]
 }
