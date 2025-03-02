@@ -15,7 +15,8 @@
         "src/__pycache__": true,
         "README.md": true,
         "src/pages/__pycache__": true,
-        "src/utils/__pycache__": true
+        "src/utils/__pycache__": true,
+        "src/storage": true
     },
     "hide-files.files": [
         "uv.lock",
@@ -27,6 +28,7 @@
         "src/__pycache__",
         "README.md",
         "src/pages/__pycache__",
-        "src/utils/__pycache__"
+        "src/utils/__pycache__",
+        "src/storage"
     ]
 }

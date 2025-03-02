@@ -29,6 +29,13 @@ class StyleManager:
             },
         }
 
+        # Definir fuentes para diferentes tipos de texto
+        self.fonts = {
+            "primary": "Poppins",  # Fuente principal
+            "secondary": "Roboto",  # Fuente secundaria (opcional)
+            "terciary": "Sigmar",  # Fuente secundaria (opcional)
+        }
+
     def get_text_size(self, text_type, width):
         """
         Retorna el tamaño de texto correspondiente al tipo y ancho de pantalla.
@@ -46,6 +53,14 @@ class StyleManager:
             return self.text_sizes[text_type]["sm"]
         else:  # Pantallas pequeñas
             return self.text_sizes[text_type]["xs"]
+
+    def get_font(self, font_type="primary"):
+        """
+        Retorna la fuente correspondiente al tipo especificado.
+        :param font_type: "primary" o "secondary"
+        :return: Nombre de la fuente
+        """
+        return self.fonts.get(font_type, "Poppins")  # Por defecto, usa "Poppins"
 
 
 # Instancia global de StyleManager

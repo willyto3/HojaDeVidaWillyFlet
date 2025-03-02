@@ -18,6 +18,9 @@ class NavigationBar(ft.Container):
         # Estado del menú desplegable
         self.menu_visible = False
 
+        # Indice del boton seleccionado
+        self.selected_index = 0
+
         # Lista de botones de navegación
         self.lista_botones = [
             "Inicio",
@@ -60,14 +63,8 @@ class NavigationBar(ft.Container):
 
         # Actualizar el ícono del botón de cambio de tema
         self.change_theme_button.icon = (
-            ft.icons.LIGHT_MODE if self.theme_mode == "dark" else ft.icons.DARK_MODE
+            ft.Icons.LIGHT_MODE if self.theme_mode == "dark" else ft.Icons.DARK_MODE
         )
-
-        print(
-            f"Cambiando a modo: {self.theme_mode}, Fondo: {self.colors['background']}"
-        )
-
-        print(f"Modo: {self.theme_mode}, Fondo: {self.colors['background']}, Ícono: {self.change_theme_button.icon}")
 
         # Reconstruir los componentes gráficos con los nuevos colores
         self.build_components()
@@ -77,11 +74,21 @@ class NavigationBar(ft.Container):
         """
         Maneja cambios en el tamaño de la pantalla.
         """
-        print(f"NavigationBar detected new width: {new_width}")
 
         # Reconstruir la barra de navegación cuando cambia el tamaño de la pantalla
         self.build_components()
         self.page.update()
+
+    def handle_button_click(self, index):
+        """
+        Maneja el clic en un botón de navegación.
+        """
+        self.selected_index = index  # Actualizar el índice seleccionado
+        self.on_nav_click(index)  # Notificar al padre
+        self.build_components()  # Reconstruir los componentes
+        self.page.update()
+
+    # ? CONSTRUCCION DE LOS COMPONENTES
 
     def build_components(self):
         """
@@ -90,7 +97,9 @@ class NavigationBar(ft.Container):
 
         # Botón para cambiar el tema
         self.change_theme_button = ft.IconButton(
-            icon=ft.icons.DARK_MODE if self.theme_mode == "dark" else ft.icons.LIGHT_MODE,
+            icon=(
+                ft.Icons.DARK_MODE if self.theme_mode == "dark" else ft.Icons.LIGHT_MODE
+            ),
             bgcolor=self.colors["accent_primary"],
             icon_color=self.colors["sun_color"],
             on_click=self.toggle_theme,
@@ -103,6 +112,7 @@ class NavigationBar(ft.Container):
                 "Willy Corzo",
                 size=self.style_manager.get_text_size("title", self.page.width),
                 color=self.colors["text"],
+                font_family=style_manager.get_font("terciary"),
             ),
         )
 
@@ -122,7 +132,7 @@ class NavigationBar(ft.Container):
                             color=self.colors["text"],
                         ),
                     ),
-                    on_click=lambda e, index=index: self.on_nav_click(index),
+                    on_click=lambda e, index=index: self.handle_button_click(index),
                 )
                 for index, dato in enumerate(self.lista_botones)
             ],
@@ -141,10 +151,10 @@ class NavigationBar(ft.Container):
             controls=[
                 ft.TextButton(
                     text=dato,
-                    height=40 if self.page.width > 600 else 30,
+                    height=50 if self.page.width > 600 else 30,
                     style=ft.ButtonStyle(
-                        color=self.colors["accent_primary"],
-                        padding=10,
+                        color=self.colors["text"],
+                        padding=15,
                         animation_duration=300,
                         text_style=ft.TextStyle(
                             size=self.style_manager.get_text_size(
@@ -152,8 +162,13 @@ class NavigationBar(ft.Container):
                             ),
                             color=self.colors["text"],
                         ),
+                        bgcolor=(
+                            self.colors["divider"]
+                            if index == self.selected_index
+                            else None
+                        ),
                     ),
-                    on_click=lambda e, index=index: self.on_nav_click(index),
+                    on_click=lambda e, index=index: self.handle_button_click(index),
                 )
                 for index, dato in enumerate(self.lista_botones)
             ],
@@ -163,7 +178,7 @@ class NavigationBar(ft.Container):
         """
         Construye la barra de navegación según el tamaño de la pantalla.
         """
-        if self.page.width > 700:
+        if self.page.width > 800:
             # Para pantallas grandes, mostrar todos los botones horizontalmente
             self.content = ft.Row(
                 controls=[
@@ -184,7 +199,7 @@ class NavigationBar(ft.Container):
                 controls=[
                     self.logo,  # Solo el logo en pantallas pequeñas
                     ft.IconButton(
-                        icon=ft.icons.MENU,
+                        icon=ft.Icons.MENU,
                         on_click=self.toggle_menu,
                         bgcolor=self.colors["accent_primary"],
                         icon_color=self.colors["text"],
