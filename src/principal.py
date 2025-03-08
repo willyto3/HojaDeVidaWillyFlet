@@ -76,7 +76,7 @@ class Principal(ft.Container):
 
         # Diseño principal de la página
         self.content = ft.Column(
-            spacing=30,
+            spacing=25,
             alignment=ft.MainAxisAlignment.CENTER,  # Centra verticalmente
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,  # Centra horizontalmente
             expand=True,

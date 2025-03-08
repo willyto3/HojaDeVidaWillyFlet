@@ -3,9 +3,9 @@
         "**/.git": true,
         "**/.svn": true,
         "**/.hg": true,
-        "**/CVS": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
+        "**/CVS": true,
         "uv.lock": true,
         "pyproject.toml": true,
         ".python-version": true,
@@ -16,7 +16,8 @@
         "README.md": true,
         "src/pages/__pycache__": true,
         "src/utils/__pycache__": true,
-        "src/storage": true
+        "src/storage": true,
+        "src/assets/data/__pycache__": true
     },
     "hide-files.files": [
         "uv.lock",
@@ -29,6 +30,7 @@
         "README.md",
         "src/pages/__pycache__",
         "src/utils/__pycache__",
-        "src/storage"
+        "src/storage",
+        "src/assets/data/__pycache__"
     ]
 }

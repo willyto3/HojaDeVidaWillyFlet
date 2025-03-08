@@ -6,6 +6,13 @@ class StyleManager:
     def __init__(self):
         # Definir tamaños de texto para diferentes anchos de pantalla
         self.text_sizes = {
+            "megatitle": {
+                "xs": 50,  # Pantallas pequeñas (móviles)
+                "sm": 60,  # Pantallas medianas (tablets)
+                "md": 70,  # Pantallas grandes (escritorio estándar)
+                "lg": 80,  # Pantallas muy grandes (monitores grandes)
+                "xl": 90,  # Pantallas extra grandes
+            },
             "title": {
                 "xs": 20,  # Pantallas pequeñas (móviles)
                 "sm": 24,  # Pantallas medianas (tablets)
@@ -21,11 +28,11 @@ class StyleManager:
                 "xl": 28,
             },
             "body": {
-                "xs": 12,
-                "sm": 14,
-                "md": 16,
-                "lg": 18,
-                "xl": 20,
+                "xs": 10,
+                "sm": 12,
+                "md": 14,
+                "lg": 16,
+                "xl": 18,
             },
         }
 
