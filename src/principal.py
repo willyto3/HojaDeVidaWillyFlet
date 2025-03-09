@@ -32,8 +32,10 @@ class Principal(ft.Container):
 
         # Configuración inicial del tema
         self.color_manager = color_manager
+
         self.theme_mode = "dark"  # Inicia en modo oscuro
-        self.page.theme_mode = ft.ThemeMode.DARK
+        self.current_index = 0  # Agregar índice de página actual
+
         self.colors = self.color_manager.get_colors(self.theme_mode)
 
         # Configuración inicial de la página
@@ -46,20 +48,39 @@ class Principal(ft.Container):
         # Construir la interfaz
         self.build()
 
+    def toggle_theme(self):
+        """Alterna el tema y actualiza toda la interfaz"""
+        self.theme_mode = "light" if self.theme_mode == "dark" else "dark"
+        self.colors = self.color_manager.get_colors(self.theme_mode)
+        self.page.bgcolor = self.colors["background"]
+
+        # Forzar reconstrucción de la página actual
+        self.nav_pages(self.current_index)
+        self.navbar.update_theme(self.theme_mode)  # Actualizar navbar
+
+        self.page.update()
+
     def nav_pages(self, index):
         """
         Cambia entre páginas según el índice seleccionado.
         """
         if index == 0:
-            self.current_page.content = HomePage(self.page)
+            new_page = HomePage(self.page, theme_mode=self.theme_mode)
+            self.current_index = 0
         elif index == 1:
-            self.current_page.content = ExperiencePage()
+            new_page = ExperiencePage(self.page, theme_mode=self.theme_mode)
+            self.current_index = 1
         elif index == 2:
-            self.current_page.content = EducationPage()
+            new_page = EducationPage(self.page, theme_mode=self.theme_mode)
+            self.current_index = 2
         elif index == 3:
-            self.current_page.content = ProjectsPage()
+            new_page = ProjectsPage(self.page, theme_mode=self.theme_mode)
+            self.current_index = 3
         elif index == 4:
-            self.current_page.content = ContactPage()
+            new_page = ContactPage(self.page, theme_mode=self.theme_mode)
+            self.current_index = 4
+
+        self.current_page.content = new_page
         self.page.update()
 
     def build(self):
@@ -67,11 +88,18 @@ class Principal(ft.Container):
         Construye la interfaz principal.
         """
         # Instancia de la barra de navegación
-        self.navbar = NavigationBar(page=self.page, on_nav_click=self.nav_pages)
+        self.navbar = NavigationBar(
+            page=self.page,
+            on_nav_click=self.nav_pages,
+            on_theme_toggle=self.toggle_theme,
+            theme_mode=self.theme_mode,  # Nombre correcto del parámetro
+        )
 
-        # Contenido inicial (página de inicio)
+        # Corregir inicialización de HomePage
         self.current_page = ft.Container(
-            content=HomePage(self.page), expand=True, alignment=ft.alignment.center
+            content=HomePage(self.page, theme_mode=self.theme_mode),
+            expand=True,
+            alignment=ft.alignment.center,
         )
 
         # Diseño principal de la página

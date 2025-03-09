@@ -28,9 +28,9 @@ class StyleManager:
                 "xl": 28,
             },
             "body": {
-                "xs": 10,
-                "sm": 12,
-                "md": 14,
+                "xs": 12,
+                "sm": 14,
+                "md": 15,
                 "lg": 16,
                 "xl": 18,
             },

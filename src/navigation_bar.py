@@ -4,7 +4,7 @@ from utils.stylemanager import style_manager
 
 
 class NavigationBar(ft.Container):
-    def __init__(self, page: ft.Page, on_nav_click):
+    def __init__(self, page: ft.Page, on_nav_click, on_theme_toggle, theme_mode):
         super().__init__()
         self.page = page
         self.on_nav_click = on_nav_click  # Callback para manejar la navegación
@@ -12,7 +12,10 @@ class NavigationBar(ft.Container):
         # Inicializar el gestor de colores y estilos
         self.color_manager = color_manager
         self.style_manager = style_manager
-        self.theme_mode = "dark"  # Inicia en modo oscuro
+
+        self.theme_mode = theme_mode
+        self.on_theme_toggle = on_theme_toggle
+
         self.colors = self.color_manager.get_colors(self.theme_mode)
 
         # Estado del menú desplegable
@@ -48,33 +51,27 @@ class NavigationBar(ft.Container):
         """
         Cambia entre modo oscuro y claro.
         """
-        self.theme_mode = "light" if self.theme_mode == "dark" else "dark"
-        self.page.theme_mode = (
-            ft.ThemeMode.LIGHT
-            if self.page.theme_mode == ft.ThemeMode.DARK
-            else ft.ThemeMode.DARK
-        )
-        self.colors = self.color_manager.get_colors(
-            self.theme_mode
-        )  # Actualizar colores
 
-        # Actualizar el fondo de la página
-        self.page.bgcolor = self.colors["background"]
-
+        self.on_theme_toggle()
         # Actualizar el ícono del botón de cambio de tema
         self.change_theme_button.icon = (
             ft.Icons.LIGHT_MODE if self.theme_mode == "dark" else ft.Icons.DARK_MODE
         )
-
         # Reconstruir los componentes gráficos con los nuevos colores
         self.build_components()
         self.page.update()
+
+    def update_theme(self, new_theme_mode: str):
+        """Actualiza el tema desde el padre (Principal)"""
+        self.theme_mode = new_theme_mode
+        self.colors = self.color_manager.get_colors(new_theme_mode)
+        self.build_components()  # Reconstruir componentes
+        self.update()
 
     def handle_resize(self, new_width):
         """
         Maneja cambios en el tamaño de la pantalla.
         """
-
         # Reconstruir la barra de navegación cuando cambia el tamaño de la pantalla
         self.build_components()
         self.page.update()

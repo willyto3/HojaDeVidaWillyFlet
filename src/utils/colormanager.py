@@ -16,15 +16,12 @@ class ColorManager:
         # Definir colores para el tema oscuro
         self.dark_theme = {
             "background": "#1E1E2F",  # Azul profundo oscuro
-            "text": "#E0E0E0",  # Gris claro
+            "text": "#FFFFFF",  # Blanco
             "accent_primary": "#1976D2",  # Azul profundo (consistente con el tema claro)
             "accent_secondary": "#FFA726",  # Naranja brillante (consistente con el tema claro)
             "divider": "#33334F",  # Azul grisáceo oscuro
             "sun_color": "#212121",  # Negro profundo
         }
-
-        # Tema actual (por defecto, claro)
-        self.current_theme = "light"
 
     def get_colors(self, theme_mode):
         """

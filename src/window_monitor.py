@@ -8,7 +8,8 @@ class WindowMonitor:
         Inicializa el monitor de la ventana.
         """
         self.page = page
-        self.last_width = page.width
+        print(self.page.width)
+        self.last_width = 50
         self.observers = []  # Lista de observadores (callbacks)
         self.running = True
 
